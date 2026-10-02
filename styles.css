@@ -158,7 +158,22 @@ button.slot { cursor: pointer; }
   border: 1px solid var(--line); border-radius: 12px; background: transparent;
 }
 .menu-item .zh { font-size: 22px; font-weight: 700; }
-.menu-item .ko { font-size: 18px; color: var(--muted); }
+.menu-item .zh, .menu-item .name, .menu-item .ko { display: block; }
+.menu-item .name { font-size: 19px; font-weight: 700; margin-top: 2px; }
+.menu-item .ko { font-size: 18px; color: var(--muted); margin-top: 2px; line-height: 1.5; }
+.menu.plain { border-top: 0; margin-top: 4px; }
+
+/* 중국 이야기 (펼치기) */
+.story { padding: 0; }
+.story summary {
+  list-style: none; cursor: pointer; min-height: 60px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 20px; font-size: 20px; font-weight: 700;
+}
+.story summary::-webkit-details-marker { display: none; }
+.story summary::after { content: "+"; font-size: 26px; color: var(--muted); font-weight: 400; }
+.story[open] summary::after { content: "−"; }
+.story p { padding: 0 20px 18px; line-height: 1.65; }
 
 /* ── 더보기 ── */
 .phrase { display: block; width: 100%; text-align: left; cursor: pointer; }
@@ -216,6 +231,8 @@ button.slot { cursor: pointer; }
 .addr-text span { display: block; }
 .addr-text span + span { margin-top: 6px; }
 .addr-taxi { font-size: 28px; font-weight: 700; margin-top: 16px; padding-top: 14px; border-top: 1px solid #ccc; }
+.addr-help { font-size: 26px; line-height: 1.45; font-weight: 700; }
+.addr-wechat { font-size: 22px; font-weight: 800; margin-top: 12px; font-family: var(--font); word-break: break-all; }
 .addr-taxi-ko { font-size: 18px; color: #444; font-family: var(--font); margin-top: 2px; }
 .tel {
   display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px;
