@@ -203,7 +203,7 @@
       if (s.gather) {
         html +=
           '<section class="card"><p class="eyebrow">다음 집합</p>' +
-          '<p class="gather-time">' + relDay(s.gather.start, t) + " " + esc(s.gather.item.time) + "</p>" +
+          '<p class="gather-time">' + relDay(s.gather.start, t) + " " + timeText(s.gather) + "</p>" +
           '<p class="gather-place">' + txt(s.gather.item.gather) + "</p></section>";
       }
     }
@@ -266,18 +266,9 @@
         photo(p.image, p.name) +
         '<p class="place-desc">' + txt(p.desc) + "</p>";
       if (p.menu) {
-        html += '<p class="menu-title">추천 메뉴</p>';
+        html += '<p class="menu-title">' + esc(p.menuTitle || "추천 메뉴") + "</p>";
         if (p.menu.length) {
-          html += '<ul class="menu">';
-          p.menu.forEach(function (m) {
-            html +=
-              '<li><button type="button" class="menu-item" data-big="' + esc(m.zh) + '" data-sub="' + esc(isTbd(m.desc) ? "" : m.desc) + '">' +
-              '<span class="zh" lang="zh-CN">' + esc(m.zh) + "</span><br>" +
-              '<span class="ko">' + txt(m.desc) + "</span>" +
-              photo(m.image, m.zh) +
-              "</button></li>";
-          });
-          html += "</ul>";
+          html += menuList(p.menu);
         } else {
           html += '<p class="tbd">' + esc(p.menuNote || TBD) + "</p>";
         }
@@ -292,6 +283,21 @@
       html += "</article>";
     });
     $("#tab-places").innerHTML = html;
+  }
+
+  // 메뉴 목록: 누르면 중국어 이름이 크게 뜹니다.
+  function menuList(items) {
+    return '<ul class="menu">' + items.map(function (m) {
+      var ko = isTbd(m.ko) ? "" : m.ko;
+      return (
+        '<li><button type="button" class="menu-item" data-big="' + esc(m.zh) + '" data-sub="' + esc(ko) + '">' +
+        '<span class="zh" lang="zh-CN">' + esc(m.zh) + "</span>" +
+        (ko ? '<span class="name">' + esc(ko) + "</span>" : "") +
+        (m.desc ? '<span class="ko">' + txt(m.desc) + "</span>" : "") +
+        photo(m.image, ko || m.zh) +
+        "</button></li>"
+      );
+    }).join("") + "</ul>";
   }
 
   // ───────── 더보기 탭 ─────────
@@ -318,23 +324,18 @@
       T.tips.map(function (x) { return "<li>" + txt(x) + "</li>"; }).join("") + "</ul></section>";
 
     html += '<h2 class="section-title">야시장 먹거리</h2>';
-    if (T.nightMarketFood && T.nightMarketFood.length) {
-      html += '<ul class="menu" style="border:0;margin:0">';
-      T.nightMarketFood.forEach(function (f) {
-        html +=
-          '<li><button type="button" class="menu-item" data-big="' + esc(f.zh) + '" data-sub="' + esc(f.name) + '">' +
-          '<span class="zh">' + esc(f.name) + '</span> <span class="ko" lang="zh-CN">' + esc(f.zh) + "</span><br>" +
-          '<span class="ko">' + txt(f.desc) + "</span>" + photo(f.image, f.name) + "</button></li>";
-      });
-      html += "</ul>";
+    var market = placeById[T.nightMarketPlace];
+    if (market && market.menu && market.menu.length) {
+      html += '<p class="muted">누르면 크게 보입니다</p>' + menuList(market.menu).replace('class="menu"', 'class="menu plain"');
     } else {
       html += '<p class="note-box">준비 중입니다</p>';
     }
 
     html += '<h2 class="section-title">중국 이야기</h2>';
     if (T.stories && T.stories.length) {
+      html += '<p class="muted" style="margin-bottom:12px">제목을 누르면 펼쳐집니다</p>';
       T.stories.forEach(function (st) {
-        html += '<section class="card"><p class="next-title">' + esc(st.title) + '</p><p style="margin-top:8px">' + esc(st.body) + "</p></section>";
+        html += '<details class="card story"><summary>' + esc(st.title) + "</summary><p>" + esc(st.body) + "</p></details>";
       });
     } else {
       html += '<p class="note-box">준비 중입니다</p>';
@@ -343,6 +344,18 @@
   }
 
   // ───────── 길 잃었을 때 ─────────
+  function helpBox(h) {
+    return (
+      '<h3 class="section-title" style="margin-top:22px">중국 분께 도움 요청</h3>' +
+      '<p class="lost-guide">' + esc(h.guide) + "</p>" +
+      '<div class="addr">' +
+      '<p class="addr-help" lang="zh-CN">' + esc(h.zh) + "</p>" +
+      '<p class="addr-wechat">WeChat: ' + esc(h.wechat) + "</p>" +
+      '<p class="addr-taxi-ko">' + esc(h.ko) + "</p>" +
+      "</div>" +
+      '<button type="button" class="btn primary" data-big="' + esc(h.zh) + '" data-sub="' + esc(h.ko) + '">이 글 크게 보기</button>'
+    );
+  }
   function renderLost() {
     var L = T.lost;
     $("#lost").innerHTML =
@@ -355,6 +368,7 @@
       '<p class="addr-taxi" lang="zh-CN">' + esc(L.taxi) + "</p>" +
       '<p class="addr-taxi-ko">' + esc(L.taxiKo) + "</p>" +
       "</div>" +
+      (L.help ? helpBox(L.help) : "") +
       '<h3 class="section-title" style="margin-top:22px">비상 연락처</h3>' +
       L.contacts.map(function (ct) {
         return '<a class="tel" href="tel:' + esc(ct.tel) + '"><span class="tel-label">' + esc(ct.label) + '</span><span class="tel-num">' + esc(ct.number) + "</span></a>";
@@ -492,7 +506,6 @@
           if (!isTbd(p.image)) imgs.push(p.image);
           (p.menu || []).forEach(function (m) { if (!isTbd(m.image)) imgs.push(m.image); });
         });
-        (T.nightMarketFood || []).forEach(function (f) { if (!isTbd(f.image)) imgs.push(f.image); });
         if (imgs.length) {
           navigator.serviceWorker.ready.then(function (r) {
             if (r.active) r.active.postMessage({ type: "cache-images", urls: imgs });

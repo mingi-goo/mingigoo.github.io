@@ -26,17 +26,18 @@
 | 집합 장소 | 일정 항목의 `gather: "숙소 앞"` (집합인 일정에만 붙임) |
 | 인천공항 집합 시각·장소 | 맨 위 `departure:`의 `meetTime`, `meetPlace` |
 | 장소 설명, 중국어 이름 | `places:` 아래 각 장소의 `desc`, `zh` |
-| **토요일 저녁 식당** | `places:`에서 `id: "satdinner"` 의 `name`, `zh`, `desc`, `menu` |
-| 식당 추천 메뉴 | 각 식당의 `menu: [ ... ]` — `{ zh: "중국어", desc: "한국어 설명", image: "" }` |
-| 길 잃었을 때 화면 | `lost:` (안내 문구, 주소, 택시 문장, 연락처) |
+| 토요일 저녁 식당 | `places:`에서 `id: "satdinner"` 의 `name`, `zh`, `desc`, `menu` |
+| 식당 추천 메뉴 | 각 장소의 `menu: [ ... ]` — `{ zh: "중국어", ko: "한국어 이름", desc: "설명", image: "" }`. 목록 제목은 `menuTitle` |
+| 길 잃었을 때 화면 | `lost:` (안내 문구, 주소, 택시 문장, 위챗 도움 요청 `help`, 연락처) |
 | 간단한 중국어 | `phrases:` — `{ ko: "뜻", sound: "한글 발음", zh: "中文" }` |
 | 준비물 / 알아둘 점 | `checklist:` / `tips:` |
-| 야시장 먹거리 / 중국 이야기 | `nightMarketFood:` / `stories:` (비어 있으면 "준비 중"으로 보임) |
+| 야시장 먹거리 | 타이동 야시장(`id: "taidong"`)의 `menu`를 고치면 더보기 탭에도 같이 바뀝니다 |
+| 중국 이야기 | `stories:` — `{ title: "제목", body: "내용" }` |
 | 여행 후 인사말 | `farewell:` |
 
 ### 예시
 
-토요일 저녁 식당이 정해졌을 때:
+식당을 바꿀 때 (예: 토요일 저녁):
 
 ```js
 {
@@ -47,12 +48,12 @@
   desc: "한국어 설명 2~3문장.",
   image: "",
   menu: [
-    { zh: "菜名", desc: "한국어 설명", image: "" }
+    { zh: "菜名", ko: "한국어 이름", desc: "설명", image: "" }
   ]
 },
 ```
 
-그리고 `days:`의 2일차 `"저녁 (식당 미정)"` 제목도 바꿔 주세요. `place: "satdinner"`는 그대로 둡니다.
+그리고 `days:`의 2일차 저녁 일정 제목도 바꿔 주세요. `place: "satdinner"`는 그대로 둡니다.
 
 ### 지켜야 할 것
 
