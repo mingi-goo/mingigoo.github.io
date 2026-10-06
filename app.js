@@ -135,6 +135,19 @@
     return res;
   }
 
+  // ───────── 가족여행 십계명 ─────────
+  // open이면 펼친 채로, 아니면 제목만 보이고 누르면 펼쳐집니다.
+  function rulesBox(open) {
+    var R = T.rules;
+    if (!R || !R.items || !R.items.length) return "";
+    return (
+      '<details class="card rules"' + (open ? " open" : "") + ">" +
+      "<summary>" + esc(R.title) + "</summary>" +
+      '<ol class="rules-list">' + R.items.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ol>" +
+      "</details>"
+    );
+  }
+
   // ───────── 지금 탭 ─────────
   function renderNow() {
     var t = now();
@@ -147,7 +160,7 @@
       (s.mode === "during" ? " · " + esc(T.days[s.dayIndex].label) : "") + "</p>" +
       '<p class="now-clock">중국 시간 ' + pad(c.h) + ":" + pad(c.mi) + " · 한국은 " + pad(korea) + ":" + pad(c.mi) + "</p>" +
       "</div>";
-    var html = head;
+    var html = head + rulesBox(s.mode === "before");
 
     if (s.mode === "before") {
       var dep = T.departure;
@@ -303,6 +316,7 @@
   // ───────── 더보기 탭 ─────────
   function renderMore() {
     var html = '<h1 class="page-title">더보기</h1>';
+    html += rulesBox(true);
 
     html += '<h2 class="section-title" style="margin-top:0">간단한 중국어</h2><p class="muted" style="margin-bottom:12px">누르면 크게 보입니다</p>';
     T.phrases.forEach(function (ph) {
