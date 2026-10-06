@@ -160,7 +160,7 @@
       (s.mode === "during" ? " · " + esc(T.days[s.dayIndex].label) : "") + "</p>" +
       '<p class="now-clock">중국 시간 ' + pad(c.h) + ":" + pad(c.mi) + " · 한국은 " + pad(korea) + ":" + pad(c.mi) + "</p>" +
       "</div>";
-    var html = head + rulesBox(s.mode === "before");
+    var html = head + rulesBox(true);
 
     if (s.mode === "before") {
       var dep = T.departure;
