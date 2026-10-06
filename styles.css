@@ -163,6 +163,20 @@ button.slot { cursor: pointer; }
 .menu-item .ko { font-size: 18px; color: var(--muted); margin-top: 2px; line-height: 1.5; }
 .menu.plain { border-top: 0; margin-top: 4px; }
 
+/* 가족여행 십계명 */
+.rules { padding: 0; border: 2px solid var(--accent); background: var(--accent-soft); }
+.rules summary {
+  list-style: none; cursor: pointer; min-height: 60px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 20px; font-size: 22px; font-weight: 800; color: var(--accent);
+}
+.rules summary::-webkit-details-marker { display: none; }
+.rules summary::after { content: "펼치기"; font-size: 16px; font-weight: 700; }
+.rules[open] summary::after { content: "접기"; }
+.rules-list { margin: 0; padding: 0 20px 18px 50px; }
+.rules-list li { font-size: 20px; font-weight: 700; padding: 5px 0; line-height: 1.45; }
+.rules-list li::marker { color: var(--accent); font-weight: 800; }
+
 /* 중국 이야기 (펼치기) */
 .story { padding: 0; }
 .story summary {
