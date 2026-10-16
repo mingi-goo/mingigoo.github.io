@@ -292,3 +292,19 @@ button.slot { cursor: pointer; }
 @media (min-width: 600px) {
   .lost-btn { right: calc(50% - 264px); }
 }
+
+/* ── 날씨 ── */
+.kv-sub { display: block; font-size: 17px; font-weight: 600; color: var(--muted); }
+.wx-now { font-size: 26px; font-weight: 800; letter-spacing: -.01em; margin: 2px 0 10px; }
+.wx-now-sky { font-size: 19px; font-weight: 600; color: var(--muted); }
+.wx-list { list-style: none; padding: 0; margin: 0; }
+.wx-row { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: baseline; padding: 10px 0; border-top: 1px solid var(--line); }
+.wx-row:first-child { border-top: 0; padding-top: 0; }
+.wx-day { font-weight: 700; white-space: nowrap; }
+.wx-sky { white-space: nowrap; }
+.wx-temp { font-weight: 800; font-size: 21px; text-align: right; white-space: nowrap; }
+.wx-temp .muted { font-weight: 600; }
+.wx-rain { display: block; font-size: 15px; font-weight: 600; color: var(--accent); }
+.wx-normal { margin-top: 10px; font-size: 17px; color: var(--muted); }
+.wx-normal.solo { margin-top: 0; font-size: 20px; font-weight: 700; color: var(--ink); }
+.wx-meta { margin-top: 4px; font-size: 15px; color: var(--muted); }
