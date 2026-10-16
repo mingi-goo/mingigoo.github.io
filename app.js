@@ -246,10 +246,15 @@
           ? esc(it.time) + (it.end ? "<small>~ " + esc(it.end) + "</small>" : "") + (it.tz === "KST" ? "<small>한국 시간</small>" : "")
           : "<small>" + esc(it.timeLabel || "") + "</small>";
         var tags = (e === curEntry ? '<span class="tag">지금</span> ' : "") + (it.gather ? '<span class="tag plain">집합</span>' : "");
+        var shorts = ids.map(function (id) { return placeById[id].short; }).filter(function (x) { return !isTbd(x); });
+        var pic = null;
+        ids.some(function (id) { var pl = placeById[id]; if (!isTbd(pl.image)) { pic = pl; return true; } return false; });
         var inner =
           '<span class="slot-time">' + time + "</span>" +
-          '<span class="slot-title">' + (tags ? tags + "<br>" : "") + esc(it.title) + "</span>" +
-          '<span class="slot-go" aria-hidden="true">' + (ids.length ? "›" : "") + "</span>";
+          '<span class="slot-title">' + (tags ? tags + "<br>" : "") + esc(it.title) +
+          shorts.map(function (x) { return '<span class="slot-desc">' + esc(x) + "</span>"; }).join("") + "</span>" +
+          '<span class="slot-go" aria-hidden="true">' + (ids.length ? "›" : "") + "</span>" +
+          (pic ? '<img class="slot-photo" src="' + esc(pic.image) + '" alt="' + esc(pic.name) + '" loading="lazy" onerror="this.remove()">' : "");
         html += ids.length
           ? '<li><button type="button" class="' + cls + '" id="slot-' + i + '" data-goplace="' + esc(ids.join(",")) + '">' + inner + "</button></li>"
           : '<li><div class="' + cls + '" id="slot-' + i + '">' + inner + "</div></li>";
@@ -280,9 +285,18 @@
         photo(p.image, p.name, p.credit) +
         '<p class="place-desc">' + txt(p.desc) + "</p>";
       if (p.menu) {
-        html += '<p class="menu-title">' + esc(p.menuTitle || "추천 메뉴") + "</p>";
+        if (!p.menu.length) html += '<p class="menu-title">' + esc(p.menuTitle || "추천 메뉴") + "</p>";
         if (p.menu.length) {
-          html += menuList(p.menu);
+          var label = esc(p.menuTitle || "추천 메뉴");
+          html +=
+            '<div class="fold">' +
+            '<button type="button" class="fold-btn" data-fold aria-expanded="false">' +
+            '<span class="fold-open">' + label + " 펼치기 (" + p.menu.length + "개) ▾</span>" +
+            '<span class="fold-close">' + label + " 접기 ▴</span></button>" +
+            '<div class="fold-body">' + menuList(p.menu) +
+            '<button type="button" class="fold-btn fold-bottom" data-fold aria-expanded="true">' +
+            '<span class="fold-close">' + label + " 접기 ▴</span></button>" +
+            "</div></div>";
         } else {
           html += '<p class="tbd">' + esc(p.menuNote || TBD) + "</p>";
         }
@@ -467,9 +481,23 @@
     if (first) first.scrollIntoView({ block: "start" });
   }
 
+  // 메뉴 접기/펼치기. 아래쪽 '접기'를 누르면 위쪽 버튼이 보이도록 화면을 올립니다.
+  function toggleFold(btn) {
+    var box = btn.closest(".fold");
+    var open = !box.classList.contains("open");
+    box.classList.toggle("open", open);
+    var top = box.querySelector(".fold-btn");
+    top.setAttribute("aria-expanded", open ? "true" : "false");
+    if (!open && btn !== top) {
+      var r = top.getBoundingClientRect();
+      if (r.top < 0 || r.bottom > window.innerHeight) top.scrollIntoView({ block: "center" });
+    }
+  }
+
   document.addEventListener("click", function (ev) {
-    var el = ev.target.closest("[data-tab],[data-goplace],[data-big],[data-close],#lost-btn");
+    var el = ev.target.closest("[data-tab],[data-goplace],[data-big],[data-close],[data-fold],#lost-btn");
     if (!el) return;
+    if (el.hasAttribute("data-fold")) return toggleFold(el);
     if (el.id === "lost-btn") return showOverlay($("#lost"));
     if (el.hasAttribute("data-close")) return closeOverlay();
     if (el.hasAttribute("data-tab")) return showTab(el.getAttribute("data-tab"));
