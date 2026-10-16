@@ -53,28 +53,7 @@
   --safe-t: env(safe-area-inset-top, 0px);
   --font: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", Roboto, "Helvetica Neue", sans-serif;
   --font-zh: "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Noto Sans SC", "Source Han Sans SC", "Microsoft YaHei", sans-serif;
-  color-scheme: light dark;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --brand: #FF4D52;
-    --brand-press: #E8383E;
-    --brand-weak: #3A1D20;
-    --on-brand: #FFFFFF;
-    --star: #FFB134;
-    --star-ink: #FFC95C;
-    --star-weak: #3A2E14;
-
-    --bg: #17171C;
-    --surface: #202027;
-    --fill-secondary: #2C2C35;
-    --ink: #FFFFFF;
-    --ink-2: #C3C3C6;
-    --muted: #9E9EA4;
-    --line: #3C3C47;
-    --press: rgba(255, 255, 255, .08);
-    --shadow-float: 0 8px 24px rgba(0, 0, 0, .5);
-  }
+  color-scheme: light;
 }
 
 * { box-sizing: border-box; }
@@ -243,25 +222,47 @@ button.slot:active { background: var(--press); }
 .fold .menu { margin-top: 12px; }
 .menu.plain { margin-top: 4px; }
 
-/* 가족여행 십계명 — 노란 포인트 */
-.rules { padding: 0; background: var(--star-weak); }
+/* 가족여행 십계명 — 연한 빨강 카드 + 흰 목록, 번호는 빨간 동그라미 */
+.rules { padding: 0; background: #FFF0EF; overflow: hidden; }
 .rules summary {
-  list-style: none; cursor: pointer; min-height: 64px;
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  padding: 16px 22px; font-size: 20px; font-weight: 700; letter-spacing: -0.015em;
+  list-style: none; cursor: pointer; min-height: 68px;
+  display: flex; align-items: center; gap: 10px;
+  padding: 16px 18px 16px 20px;
+  font-size: 20px; font-weight: 700; letter-spacing: -0.015em; color: #B3151C;
 }
-.rules summary::before { content: "★"; color: var(--star); margin-right: -4px; }
-.rules summary { justify-content: flex-start; }
 .rules summary::-webkit-details-marker { display: none; }
+.rules summary::before {
+  content: "★"; flex: none;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; border-radius: 9px;
+  background: var(--brand); color: var(--star);
+  font-size: 16px; line-height: 1;
+}
 .rules summary::after {
-  content: "펼치기"; margin-left: auto;
-  font-size: 14px; font-weight: 700; color: var(--star-ink);
-  padding: 6px 10px; border-radius: 999px; background: rgba(255, 195, 0, .22);
+  content: "펼치기"; margin-left: auto; flex: none;
+  font-size: 14px; font-weight: 700; color: #B3151C;
+  padding: 7px 12px; border-radius: 999px; background: #FFFFFF;
 }
 .rules[open] summary::after { content: "접기"; }
-.rules-list { margin: 0; padding: 0 22px 20px 52px; }
-.rules-list li { font-size: 19px; font-weight: 600; padding: 5px 0; line-height: 1.45; }
-.rules-list li::marker { color: var(--star-ink); font-weight: 700; font-variant-numeric: tabular-nums; }
+.rules-list {
+  list-style: none; counter-reset: rule;
+  margin: 0 12px 12px; padding: 6px 16px;
+  background: #FFFFFF; border-radius: 18px;
+}
+.rules-list li {
+  counter-increment: rule;
+  display: grid; grid-template-columns: 26px 1fr; gap: 12px; align-items: start;
+  padding: 11px 0; border-top: 1px solid #F6E3E2;
+  font-size: 18px; font-weight: 600; line-height: 1.45; color: var(--ink);
+}
+.rules-list li:first-child { border-top: 0; }
+.rules-list li::before {
+  content: counter(rule);
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; margin-top: 0; border-radius: 50%;
+  background: #FFE3E1; color: #C81E26;
+  font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums;
+}
 
 /* 중국 이야기 (펼치기) */
 .story { padding: 0; }

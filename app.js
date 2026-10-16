@@ -248,7 +248,7 @@
     if (s.mode === "before") {
       var dep = T.departure;
       var days = Math.round((toMs(dep.date, "00:00") - toMs(fromKey(dayKey(t)), "00:00")) / (24 * HOUR));
-      var dday = days <= 0 ? "오늘 출발합니다" : days === 1 ? "내일 출발합니다" : "출발까지 " + days + "일";
+      var dday = days <= 0 ? "오늘 출발해요" : days === 1 ? "내일 출발해요" : "출발까지 " + days + "일";
       html +=
         '<section class="card now-card">' +
         '<p class="eyebrow accent">' + esc(T.title) + "</p>" +
@@ -269,7 +269,7 @@
     } else if (s.mode === "after") {
       html +=
         '<section class="card now-card farewell">' +
-        '<p class="eyebrow accent">여행이 끝났습니다</p>' +
+        '<p class="eyebrow accent">여행이 끝났어요</p>' +
         T.farewell.map(function (x) { return "<p>" + esc(x) + "</p>"; }).join("") +
         "</section>";
     } else {
@@ -285,12 +285,12 @@
       } else if (s.moving) {
         html +=
           '<section class="card now-card"><p class="eyebrow accent">지금</p>' +
-          '<h1 class="now-title">다음 장소로 이동 중입니다</h1></section>';
+          '<h1 class="now-title">다음 장소로 이동 중이에요</h1></section>';
       } else {
         html +=
           '<section class="card now-card"><p class="eyebrow accent">지금</p>' +
-          '<h1 class="now-title">숙소에서 쉬는 시간입니다</h1>' +
-          (dayKey(t) === dayKey(T.days[s.endedDay] ? toMs(T.days[s.endedDay].date, "12:00") : 0) ? '<p class="now-time muted">오늘 일정이 모두 끝났습니다</p>' : "") +
+          '<h1 class="now-title">숙소에서 쉬는 시간이에요</h1>' +
+          (dayKey(t) === dayKey(T.days[s.endedDay] ? toMs(T.days[s.endedDay].date, "12:00") : 0) ? '<p class="now-time muted">오늘 일정이 모두 끝났어요</p>' : "") +
           "</section>";
       }
       if (s.next) {
@@ -423,7 +423,7 @@
     var html = '<h1 class="page-title">더보기</h1>';
     html += rulesBox(true);
 
-    html += '<h2 class="section-title" style="margin-top:0">간단한 중국어</h2><p class="muted" style="margin-bottom:12px">누르면 크게 보입니다</p>';
+    html += '<h2 class="section-title" style="margin-top:0">간단한 중국어</h2><p class="muted" style="margin-bottom:12px">누르면 크게 보여요</p>';
     T.phrases.forEach(function (ph) {
       if (isTbd(ph.zh)) {
         html += '<div class="card phrase"><p class="ko tbd">' + TBD + "</p></div>";
@@ -445,19 +445,19 @@
     html += '<h2 class="section-title">야시장 먹거리</h2>';
     var market = placeById[T.nightMarketPlace];
     if (market && market.menu && market.menu.length) {
-      html += '<p class="muted">누르면 크게 보입니다</p>' + menuList(market.menu).replace('class="menu"', 'class="menu plain"');
+      html += '<p class="muted">누르면 크게 보여요</p>' + menuList(market.menu).replace('class="menu"', 'class="menu plain"');
     } else {
-      html += '<p class="note-box">준비 중입니다</p>';
+      html += '<p class="note-box">준비 중이에요</p>';
     }
 
     html += '<h2 class="section-title">중국 이야기</h2>';
     if (T.stories && T.stories.length) {
-      html += '<p class="muted" style="margin-bottom:12px">제목을 누르면 펼쳐집니다</p>';
+      html += '<p class="muted" style="margin-bottom:12px">제목을 누르면 펼쳐져요</p>';
       T.stories.forEach(function (st) {
         html += '<details class="card story"><summary>' + esc(st.title) + "</summary><p>" + esc(st.body) + "</p></details>";
       });
     } else {
-      html += '<p class="note-box">준비 중입니다</p>';
+      html += '<p class="note-box">준비 중이에요</p>';
     }
     $("#tab-more").innerHTML = html;
   }
