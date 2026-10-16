@@ -6,7 +6,7 @@
  *   그래서 data.js만 고쳐도 가족 휴대폰에 반영됩니다.
  * - 화면 구성이 크게 바뀌었거나 반영이 안 될 때는 VERSION 숫자를 1 올리면 저장본 전체를 새로 받습니다.
  */
-var VERSION = 12;
+var VERSION = 13;
 var CACHE = "qingdao-v" + VERSION;
 var ASSETS = [
   "./",
@@ -15,6 +15,7 @@ var ASSETS = [
   "./data.js",
   "./app.js",
   "./manifest.webmanifest",
+  "./images/map.svg",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
   "./icons/icon-maskable-512.png",
