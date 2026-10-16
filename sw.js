@@ -6,7 +6,7 @@
  *   그래서 data.js만 고쳐도 가족 휴대폰에 반영됩니다.
  * - 화면 구성이 크게 바뀌었거나 반영이 안 될 때는 VERSION 숫자를 1 올리면 저장본 전체를 새로 받습니다.
  */
-var VERSION = 6;
+var VERSION = 7;
 var CACHE = "qingdao-v" + VERSION;
 var ASSETS = [
   "./",
@@ -72,7 +72,16 @@ self.addEventListener("fetch", function (event) {
   var req = event.request;
   if (req.method !== "GET") return;
   var url = new URL(req.url);
-  if (url.origin !== self.location.origin) return;
+  if (url.origin !== self.location.origin) {
+    // 다른 사이트 사진(위키미디어 등): 저장본이 있으면 그걸 보여 줍니다. 중국 와이파이에서도 보이게 하려는 것입니다.
+    if (req.destination !== "image") return;
+    event.respondWith(
+      caches.match(req.url).then(function (hit) {
+        return hit || fetch(req);
+      })
+    );
+    return;
+  }
 
   // 화면 열기: 주소 뒤 ?now= 등과 관계없이 저장된 index.html
   if (req.mode === "navigate") {
@@ -109,7 +118,10 @@ self.addEventListener("message", function (event) {
       return Promise.all(d.urls.map(function (u) {
         return cache.match(u).then(function (hit) {
           if (hit) return;
-          return fetch(u).then(function (res) { if (res.ok) return cache.put(u, res); }).catch(function () {});
+          var external = new URL(u, self.location.href).origin !== self.location.origin;
+          return fetch(u, external ? { mode: "no-cors" } : {}).then(function (res) {
+            if (res.ok || res.type === "opaque") return cache.put(u, res);
+          }).catch(function () {});
         });
       }));
     })

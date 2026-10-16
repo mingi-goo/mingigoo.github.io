@@ -10,6 +10,7 @@
  *   한국 시간으로 적은 항목만 tz: "KST" 를 붙입니다.
  * - 메뉴는 { zh: "중국어 이름", ko: "한국어 이름", desc: "설명", image: "" } 형식입니다.
  * - image 칸은 선택입니다. images 폴더에 사진을 올리고 "images/파일이름.jpg"처럼 적으면 표시됩니다.
+ *   인터넷 주소를 적어도 됩니다. 남의 사진이면 credit 칸에 출처를 적습니다.
  */
 self.TRIP = {
   title: "칭다오 가족여행",
@@ -139,7 +140,8 @@ self.TRIP = {
       zh: "五四广场",
       type: "관광지",
       desc: "붉은 조형물 '5월의 바람'이 있는 해변 광장입니다. 1919년 5·4운동을 기념하는 곳입니다. 첫날 밤 야경을 보며 산책합니다.",
-      image: ""
+      image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/12/%E4%BA%94%E5%9B%9B%E5%B9%BF%E5%9C%BA_-_%E4%BA%94%E6%9C%88%E7%9A%84%E9%A3%8E%E9%9B%95%E5%A1%91_-_2023-08-25_04.jpg/960px-%E4%BA%94%E5%9B%9B%E5%B9%BF%E5%9C%BA_-_%E4%BA%94%E6%9C%88%E7%9A%84%E9%A3%8E%E9%9B%95%E5%A1%91_-_2023-08-25_04.jpg",
+      credit: "사진: 瑞丽江的河水, CC BY-SA 4.0 / 위키미디어 커먼즈"
     },
     {
       id: "aofan",
@@ -147,7 +149,8 @@ self.TRIP = {
       zh: "奥帆中心",
       type: "관광지",
       desc: "2008년 베이징올림픽 때 요트 경기가 열린 곳입니다. 칭다오의 야경 명소입니다.",
-      image: ""
+      image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dc/%E9%9D%92%E5%B2%9B%E5%A5%A5%E5%B8%86%E4%B8%AD%E5%BF%83_2013-09-26.jpg/960px-%E9%9D%92%E5%B2%9B%E5%A5%A5%E5%B8%86%E4%B8%AD%E5%BF%83_2013-09-26.jpg",
+      credit: "사진: Baishiya 白石崖, CC BY 2.0 / 위키미디어 커먼즈"
     },
     {
       id: "mixc",
@@ -163,7 +166,8 @@ self.TRIP = {
       zh: "栈桥",
       type: "관광지",
       desc: "바다로 길게 뻗은 다리와, 다리 끝의 정자가 있는 곳입니다. 칭다오를 상징하는 풍경입니다.",
-      image: ""
+      image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/%E9%9D%92%E5%B2%9B%E6%A0%88%E6%A1%A5_Ehemalige_Landungsbr%C3%BCcke_Qingdao.jpg/960px-%E9%9D%92%E5%B2%9B%E6%A0%88%E6%A1%A5_Ehemalige_Landungsbr%C3%BCcke_Qingdao.jpg",
+      credit: "사진: StefanTsingtauer, CC BY-SA 4.0 / 위키미디어 커먼즈"
     },
     {
       id: "church",
@@ -171,7 +175,8 @@ self.TRIP = {
       zh: "天主教堂",
       type: "관광지",
       desc: "독일 조차지 시절에 지은 성당입니다. 두 개의 탑이 나란히 서 있는 쌍탑 성당입니다.",
-      image: ""
+      image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3c/%E9%9D%92%E5%B2%9B%E5%9C%A3%E5%BC%A5%E5%8E%84%E5%B0%94%E5%A4%A9%E4%B8%BB%E6%95%99%E5%A0%82%E8%A5%BF%E9%9D%A2.jpg/960px-%E9%9D%92%E5%B2%9B%E5%9C%A3%E5%BC%A5%E5%8E%84%E5%B0%94%E5%A4%A9%E4%B8%BB%E6%95%99%E5%A0%82%E8%A5%BF%E9%9D%A2.jpg",
+      credit: "사진: 赵乐鑫1989, CC BY-SA 4.0 / 위키미디어 커먼즈"
     },
     {
       id: "xiaoyushan",
@@ -179,7 +184,8 @@ self.TRIP = {
       zh: "小鱼山公园",
       type: "관광지",
       desc: "전망대가 있는 공원입니다. 붉은 지붕의 구시가지와 바다를 내려다볼 수 있습니다.",
-      image: ""
+      image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/98/%E9%9D%92%E5%B2%9B%E5%9F%BA%E7%9D%A3%E6%95%99%E5%A0%82%E4%B8%8E%E5%B0%8F%E9%B1%BC%E5%B1%B1.jpg/960px-%E9%9D%92%E5%B2%9B%E5%9F%BA%E7%9D%A3%E6%95%99%E5%A0%82%E4%B8%8E%E5%B0%8F%E9%B1%BC%E5%B1%B1.jpg",
+      credit: "사진: Hans-Günter Wagner, CC BY-SA 2.0 / 위키미디어 커먼즈"
     },
     {
       id: "badaguan",
@@ -187,7 +193,8 @@ self.TRIP = {
       zh: "八大关",
       type: "관광지",
       desc: "여러 나라 양식의 별장이 모여 있는 동네입니다. 가로수 길을 따라 산책합니다.",
-      image: ""
+      image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e6/%E9%9D%92%E5%B2%9B%E5%85%AB%E5%A4%A7%E5%85%B3%E8%8A%B1%E7%9F%B3%E6%A5%BC.jpg/960px-%E9%9D%92%E5%B2%9B%E5%85%AB%E5%A4%A7%E5%85%B3%E8%8A%B1%E7%9F%B3%E6%A5%BC.jpg",
+      credit: "사진: Gisling, CC BY-SA 3.0 / 위키미디어 커먼즈"
     },
     {
       id: "dayuan33",
@@ -228,7 +235,8 @@ self.TRIP = {
       zh: "青岛啤酒博物馆",
       type: "관광지",
       desc: "1903년에 지은 맥주 공장 건물에 있는 박물관입니다. 갓 나온 생맥주 원액(원장)을 시음할 수 있습니다. 한국어 해설을 들으며 둘러봅니다.",
-      image: ""
+      image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bc/Tsingtao_Brewery_in_Qingdao.jpg/960px-Tsingtao_Brewery_in_Qingdao.jpg",
+      credit: "사진: Lennartbj, CC BY-SA 4.0 / 위키미디어 커먼즈"
     },
     {
       id: "satdinner",
