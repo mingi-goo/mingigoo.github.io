@@ -6,7 +6,7 @@
  *   그래서 data.js만 고쳐도 가족 휴대폰에 반영됩니다.
  * - 화면 구성이 크게 바뀌었거나 반영이 안 될 때는 VERSION 숫자를 1 올리면 저장본 전체를 새로 받습니다.
  */
-var VERSION = 9;
+var VERSION = 11;
 var CACHE = "qingdao-v" + VERSION;
 var ASSETS = [
   "./",
@@ -74,12 +74,29 @@ self.addEventListener("fetch", function (event) {
   var url = new URL(req.url);
   if (url.origin !== self.location.origin) {
     // 다른 사이트 사진(위키미디어 등): 저장본이 있으면 그걸 보여 줍니다. 중국 와이파이에서도 보이게 하려는 것입니다.
-    if (req.destination !== "image") return;
-    event.respondWith(
-      caches.match(req.url).then(function (hit) {
-        return hit || fetch(req);
-      })
-    );
+    if (req.destination === "image") {
+      event.respondWith(
+        caches.match(req.url).then(function (hit) {
+          return hit || fetch(req);
+        })
+      );
+      return;
+    }
+    // 글꼴(Pretendard): 한 번 받으면 저장해 두고 씁니다. 못 받으면 휴대폰 기본 글꼴로 보입니다.
+    if (req.destination === "font" || req.destination === "style") {
+      event.respondWith(
+        caches.match(req.url).then(function (hit) {
+          if (hit) return hit;
+          return fetch(req).then(function (res) {
+            if (res.ok || res.type === "opaque") {
+              var copy = res.clone();
+              caches.open(CACHE).then(function (cache) { cache.put(req.url, copy); });
+            }
+            return res;
+          });
+        })
+      );
+    }
     return;
   }
 
