@@ -231,6 +231,16 @@
     );
   }
 
+  // ───────── 지도 (서울·부천·칭다오) ─────────
+  function mapCard() {
+    return (
+      '<section class="card map-card"><p class="eyebrow">칭다오는 여기예요</p>' +
+      '<img class="map-img" src="images/map.svg" width="640" height="440" alt="중국 산둥반도의 칭다오와 한국의 서울, 부천 위치 지도">' +
+      '<p class="map-note">인천에서 서해 건너 약 600km, 비행기로 1시간 30분 정도예요. 시차는 1시간, 중국이 한 시간 늦어요.</p>' +
+      "</section>"
+    );
+  }
+
   // ───────── 지금 탭 ─────────
   function renderNow() {
     var t = now();
@@ -238,10 +248,11 @@
     var c = china(t);
     var korea = (c.h + 1) % 24;
     var head =
-      '<div class="now-head">' +
+      '<div class="now-head"><div>' +
       '<p class="now-date">' + c.m + "월 " + c.d + "일 (" + WEEK[c.w] + ")" +
       (s.mode === "during" ? " · " + esc(T.days[s.dayIndex].label) : "") + "</p>" +
-      '<p class="now-clock">중국 시간 ' + pad(c.h) + ":" + pad(c.mi) + " · 한국은 " + pad(korea) + ":" + pad(c.mi) + "</p>" +
+      '<p class="now-clock">중국 ' + pad(c.h) + ":" + pad(c.mi) + " · 한국 " + pad(korea) + ":" + pad(c.mi) + "</p>" +
+      '</div><p class="trip-badge"><span class="flag" aria-hidden="true"></span>칭다오 여행</p>' +
       "</div>";
     var html = head + rulesBox(s.mode === "before");
 
@@ -256,12 +267,15 @@
         '<dl class="kv">' +
         "<dt>출발</dt><dd>" + dateLabel(dep.date) + " " + esc(dep.time) + (dep.tz === "KST" ? " (한국 시간)" : "") + "</dd>" +
         "<dt>장소</dt><dd>" + txt(dep.place) + " · " + txt(dep.flight) + "</dd>" +
+        (dep.arrive ? "<dt>칭다오 도착 예정</dt><dd>" + dateLabel(dep.date) + " " + esc(dep.arrive) + " (중국 시간)" +
+          '<span class="kv-sub">한국 시간으로는 ' + pad((+dep.arrive.split(":")[0] + 1) % 24) + ":" + esc(dep.arrive.split(":")[1]) + "</span></dd>" : "") +
         "<dt>공항 집합</dt><dd>" + txt(dep.meetTime) + " · " + txt(dep.meetPlace) + "</dd>" +
         (T.returnFlight
           ? "<dt>돌아오는 편</dt><dd>" + dateLabel(T.returnFlight.date) + " " + esc(T.returnFlight.time) + " (중국 시간) · " + txt(T.returnFlight.flight) +
             '<span class="kv-sub">' + txt(T.returnFlight.meet) + "</span></dd>"
           : "") +
         "</dl></section>" +
+        mapCard() +
         weatherCard(t, "before") +
         '<section class="card"><p class="eyebrow">준비물</p><ul class="plain-list">' +
         T.checklist.map(function (x) { return "<li>" + txt(x) + "</li>"; }).join("") +
@@ -307,7 +321,7 @@
           '<p class="gather-time">' + relDay(s.gather.start, t) + " " + timeText(s.gather) + "</p>" +
           '<p class="gather-place">' + txt(s.gather.item.gather) + "</p></section>";
       }
-      html += weatherCard(t, "during");
+      html += weatherCard(t, "during") + mapCard();
     }
     $("#tab-now").innerHTML = html;
     if (s.mode !== "after") loadWeather();
