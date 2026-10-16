@@ -148,6 +148,89 @@
     );
   }
 
+  // ───────── 날씨 ─────────
+  // 인터넷이 되면 Open-Meteo(무료, 키 없음)에서 예보를 받아 휴대폰에 저장해 두고,
+  // 안 되면 마지막 저장본이나 data.js의 평년 기온을 보여 줍니다.
+  var W = T.weather;
+  var WX_KEY = "qingdao-weather";
+  var WX_FRESH = 30 * 60 * 1000; // 30분마다 새로 받기
+  var WX_RETRY = 5 * 60 * 1000;  // 실패하면 5분 뒤 다시 시도
+  var wx = null, wxLastTry = 0;
+  try { wx = JSON.parse(localStorage.getItem(WX_KEY) || "null"); } catch (e) { wx = null; }
+
+  function wxDesc(code) {
+    if (code === 0) return ["☀️", "맑음"];
+    if (code === 1) return ["🌤️", "맑음"];
+    if (code === 2) return ["⛅", "구름 조금"];
+    if (code === 3) return ["☁️", "흐림"];
+    if (code === 45 || code === 48) return ["🌫️", "안개"];
+    if (code >= 51 && code <= 57) return ["🌦️", "이슬비"];
+    if ((code >= 61 && code <= 67) || (code >= 80 && code <= 82)) return ["🌧️", "비"];
+    if ((code >= 71 && code <= 77) || code === 85 || code === 86) return ["🌨️", "눈"];
+    if (code >= 95) return ["⛈️", "천둥번개"];
+    return ["🌡️", ""];
+  }
+  function deg(x) { return Math.round(x) + "°"; }
+
+  function loadWeather() {
+    if (!W || !window.fetch) return;
+    var t = Date.now();
+    if (wx && t - wx.at < WX_FRESH) return;
+    if (t - wxLastTry < WX_RETRY) return;
+    wxLastTry = t;
+    var url = "https://api.open-meteo.com/v1/forecast?latitude=" + W.lat + "&longitude=" + W.lon +
+      "&current=temperature_2m,weather_code" +
+      "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max" +
+      "&timezone=Asia%2FShanghai&forecast_days=16";
+    fetch(url).then(function (r) {
+      if (!r.ok) throw new Error("weather " + r.status);
+      return r.json();
+    }).then(function (j) {
+      if (!j || !j.daily) return;
+      wx = { at: Date.now(), current: j.current || null, daily: j.daily };
+      try { localStorage.setItem(WX_KEY, JSON.stringify(wx)); } catch (e) {}
+      if (current === "now") renderNow();
+    }).catch(function () {});
+  }
+
+  // 여행 전: 여행 3일 예보 / 여행 중: 지금 기온 + 오늘·내일 예보
+  function weatherCard(t, mode) {
+    if (!W) return "";
+    var d = wx && wx.daily;
+    var keys = mode === "before"
+      ? T.days.map(function (x) { return x.date; })
+      : [fromKey(dayKey(t)), fromKey(dayKey(t + 24 * HOUR))];
+    var rows = "";
+    if (d) keys.forEach(function (k) {
+      var i = d.time.indexOf(k);
+      if (i < 0) return;
+      var w = wxDesc(d.weather_code[i]);
+      var rain = d.precipitation_probability_max ? d.precipitation_probability_max[i] : null;
+      rows +=
+        '<li class="wx-row">' +
+        '<span class="wx-day">' + relDay(toMs(k, "12:00"), t) + "</span>" +
+        '<span class="wx-sky"><span aria-hidden="true">' + w[0] + "</span> " + esc(w[1]) + "</span>" +
+        '<span class="wx-temp">' + deg(d.temperature_2m_max[i]) + ' <span class="muted">/ ' + deg(d.temperature_2m_min[i]) + "</span>" +
+        (rain != null && rain >= 30 ? '<span class="wx-rain">비 올 확률 ' + rain + "%</span>" : "") +
+        "</span></li>";
+    });
+    var cur = "";
+    if (wx && wx.current && previewMs == null && Date.now() - wx.at < 3 * HOUR) {
+      var cw = wxDesc(wx.current.weather_code);
+      cur = '<p class="wx-now"><span aria-hidden="true">' + cw[0] + "</span> 지금 칭다오 " + deg(wx.current.temperature_2m) +
+        ' <span class="wx-now-sky">' + esc(cw[1]) + "</span></p>";
+    }
+    var when = wx ? '<p class="wx-meta">예보 ' + relDay(wx.at, Date.now()) + " " + hm(wx.at) + " 기준 (중국 시간)</p>" : "";
+    return (
+      '<section class="card wx"><p class="eyebrow">칭다오 날씨</p>' +
+      cur +
+      (rows ? '<ul class="wx-list">' + rows + "</ul>" + when : "") +
+      '<p class="wx-normal' + (rows ? "" : " solo") + '">10월 말 평소: ' + esc(W.normal) + "</p>" +
+      (W.note ? '<p class="wx-meta">' + esc(W.note) + "</p>" : "") +
+      "</section>"
+    );
+  }
+
   // ───────── 지금 탭 ─────────
   function renderNow() {
     var t = now();
@@ -174,7 +257,12 @@
         "<dt>출발</dt><dd>" + dateLabel(dep.date) + " " + esc(dep.time) + (dep.tz === "KST" ? " (한국 시간)" : "") + "</dd>" +
         "<dt>장소</dt><dd>" + txt(dep.place) + " · " + txt(dep.flight) + "</dd>" +
         "<dt>공항 집합</dt><dd>" + txt(dep.meetTime) + " · " + txt(dep.meetPlace) + "</dd>" +
+        (T.returnFlight
+          ? "<dt>돌아오는 편</dt><dd>" + dateLabel(T.returnFlight.date) + " " + esc(T.returnFlight.time) + " (중국 시간) · " + txt(T.returnFlight.flight) +
+            '<span class="kv-sub">' + txt(T.returnFlight.meet) + "</span></dd>"
+          : "") +
         "</dl></section>" +
+        weatherCard(t, "before") +
         '<section class="card"><p class="eyebrow">준비물</p><ul class="plain-list">' +
         T.checklist.map(function (x) { return "<li>" + txt(x) + "</li>"; }).join("") +
         "</ul></section>";
@@ -219,8 +307,10 @@
           '<p class="gather-time">' + relDay(s.gather.start, t) + " " + timeText(s.gather) + "</p>" +
           '<p class="gather-place">' + txt(s.gather.item.gather) + "</p></section>";
       }
+      html += weatherCard(t, "during");
     }
     $("#tab-now").innerHTML = html;
+    if (s.mode !== "after") loadWeather();
   }
 
   // ───────── 일정 탭 ─────────
