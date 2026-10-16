@@ -260,9 +260,10 @@
   }
 
   // ───────── 장소 탭 ─────────
-  function photo(src, alt) {
+  function photo(src, alt, credit) {
     if (isTbd(src)) return "";
-    return '<img class="photo" src="' + esc(src) + '" alt="' + esc(alt) + '" loading="lazy" onerror="this.remove()">';
+    var img = '<img class="photo" src="' + esc(src) + '" alt="' + esc(alt) + '" loading="lazy" onerror="this.parentNode.remove()">';
+    return '<figure class="photo-wrap">' + img + (credit ? '<figcaption class="photo-credit">' + esc(credit) + "</figcaption>" : "") + "</figure>";
   }
   function amapUrl(zh) {
     return "https://uri.amap.com/search?keyword=" + encodeURIComponent(zh) + "&city=" + encodeURIComponent("青岛") + "&src=family-trip&callnative=1";
@@ -276,7 +277,7 @@
         '<span class="tag plain">' + esc(p.type) + "</span>" +
         '<h2 class="place-name">' + esc(p.name) + "</h2>" +
         (hasZh ? '<p class="place-zh" lang="zh-CN">' + esc(p.zh) + "</p>" : "") +
-        photo(p.image, p.name) +
+        photo(p.image, p.name, p.credit) +
         '<p class="place-desc">' + txt(p.desc) + "</p>";
       if (p.menu) {
         html += '<p class="menu-title">' + esc(p.menuTitle || "추천 메뉴") + "</p>";

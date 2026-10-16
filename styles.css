@@ -149,7 +149,9 @@ button.slot { cursor: pointer; }
 .place-name { font-size: 25px; font-weight: 800; letter-spacing: -.01em; line-height: 1.3; }
 .place-zh { font-size: 19px; color: var(--muted); margin-top: 4px; }
 .place-desc { margin-top: 12px; }
-.photo { display: block; width: 100%; height: auto; border-radius: 12px; margin: 12px 0 0; background: var(--line); }
+.photo-wrap { margin: 12px 0 0; }
+.photo { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 12px; background: var(--line); }
+.photo-credit { margin-top: 4px; font-size: 11px; line-height: 1.3; color: var(--muted, #888); text-align: right; }
 .menu { list-style: none; padding: 0; margin: 18px 0 0; border-top: 1px solid var(--line); }
 .menu-title { font-size: 18px; font-weight: 800; margin: 16px 0 6px; }
 .menu-item {
