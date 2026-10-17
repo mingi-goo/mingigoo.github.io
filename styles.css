@@ -417,3 +417,9 @@ button.slot:active { background: var(--press); }
 /* ── 지도 ── */
 .map-img { display: block; width: 100%; height: auto; border-radius: var(--r-xl); background: #EAF2FB; }
 .map-note { margin-top: 12px; font-size: 16px; color: var(--ink-2); line-height: 1.55; }
+
+/* ── 공항 안내 ── */
+.guide-title { font-size: 19px; font-weight: 700; letter-spacing: -0.015em; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+.guide .plain-list li { padding-left: 14px; position: relative; color: var(--ink-2); }
+.guide .plain-list li::before { content: ""; position: absolute; left: 0; top: 25px; width: 5px; height: 5px; border-radius: 50%; background: var(--brand); }
+.guide .plain-list li:first-child::before { top: 11px; }
