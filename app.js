@@ -456,6 +456,14 @@
     html += '<h2 class="section-title">알아둘 점</h2><section class="card"><ul class="plain-list">' +
       T.tips.map(function (x) { return "<li>" + txt(x) + "</li>"; }).join("") + "</ul></section>";
 
+    if (T.airportGuide && T.airportGuide.length) {
+      html += '<h2 class="section-title">공항 안내</h2>';
+      T.airportGuide.forEach(function (g) {
+        html += '<section class="card guide"><p class="guide-title">' + esc(g.title) + '</p><ul class="plain-list">' +
+          g.items.map(function (x) { return "<li>" + txt(x) + "</li>"; }).join("") + "</ul></section>";
+      });
+    }
+
     html += '<h2 class="section-title">야시장 먹거리</h2>';
     var market = placeById[T.nightMarketPlace];
     if (market && market.menu && market.menu.length) {
