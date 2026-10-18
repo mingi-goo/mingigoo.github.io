@@ -426,7 +426,7 @@
         '<span class="zh" lang="zh-CN">' + esc(m.zh) + "</span>" +
         (ko ? '<span class="name">' + esc(ko) + "</span>" : "") +
         (m.desc ? '<span class="ko">' + txt(m.desc) + "</span>" : "") +
-        photo(m.image, ko || m.zh) +
+        photo(m.image, ko || m.zh, m.credit) +
         "</button></li>"
       );
     }).join("") + "</ul>";

@@ -27,7 +27,7 @@
 | 인천공항 집합 시각·장소 | 맨 위 `departure:`의 `meetTime`, `meetPlace` |
 | 장소 설명, 중국어 이름 | `places:` 아래 각 장소의 `desc`, `zh` |
 | 토요일 저녁 식당 | `places:`에서 `id: "satdinner"` 의 `name`, `zh`, `desc`, `menu` |
-| 식당 추천 메뉴 | 각 장소의 `menu: [ ... ]` — `{ zh: "중국어", ko: "한국어 이름", desc: "설명", image: "" }`. 목록 제목은 `menuTitle` |
+| 식당 추천 메뉴 | 각 장소의 `menu: [ ... ]` — `{ zh: "중국어", ko: "한국어 이름", desc: "설명", image: "", credit: "" }`. 남의 사진이면 `credit`에 출처를 적습니다. 목록 제목은 `menuTitle` |
 | 길 잃었을 때 화면 | `lost:` (안내 문구, 주소, 택시 문장, 위챗 도움 요청 `help`, 연락처) |
 | 간단한 중국어 | `phrases:` — `{ ko: "뜻", sound: "한글 발음", zh: "中文" }` |
 | 준비물 / 알아둘 점 | `checklist:` / `tips:` |
