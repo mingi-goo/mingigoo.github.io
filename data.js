@@ -82,9 +82,10 @@ self.TRIP = {
         { time: "07:30", end: "08:15", title: "아침: 숙소에서 중국식 아침 (배달)", place: "breakfast" },
         { time: "08:30", title: "숙소 앞에서 전세 차량 출발", place: "stay", gather: "숙소 앞" },
         { time: "09:00", end: "10:20", title: "칭다오맥주 박물관 (한국어 해설 + 원장 시음)", place: "beer" },
-        { time: "10:40", end: "11:10", title: "잔교", place: "zhanqiao" },
-        { time: "11:20", end: "11:45", title: "천주교당", place: "church" },
-        { time: "12:00", end: "12:40", title: "소어산 공원", place: "xiaoyushan" },
+        { time: "10:40", end: "11:05", title: "잔교", place: "zhanqiao" },
+        { time: "11:05", end: "11:40", title: "중산루 옛 거리를 걸어서 천주교당까지", place: "zhongshanlu" },
+        { time: "11:40", end: "11:55", title: "천주교당 (여기서 다시 차를 타요)", place: "church", gather: "천주교당 앞" },
+        { time: "12:05", end: "12:45", title: "소어산 공원", place: "xiaoyushan" },
         { time: "13:05", end: "14:25", title: "점심: 33호 대원 (산둥요리)", place: "dayuan33" },
         { time: "14:40", end: "15:30", title: "팔대관 산책", place: "badaguan" },
         { time: "16:00", end: "17:30", title: "발마사지: 화샤량쯔 하이톈중신점", place: "huaxia" },
@@ -225,12 +226,21 @@ self.TRIP = {
       credit: "사진: StefanTsingtauer, CC BY-SA 4.0 / 위키미디어 커먼즈"
     },
     {
+      id: "zhongshanlu",
+      name: "중산루 구시가지",
+      short: "독일이 만든 옛 번화가, 잔교에서 천주교당까지 걸어요",
+      zh: "中山路",
+      type: "관광지",
+      desc: "독일이 칭다오를 차지한 1897년부터 유럽인 상업지구로 만든 거리예요. 이후 오랫동안 칭다오 최고의 번화가였고, 지금도 유럽풍 옛 건물이 100곳 넘게 남아 있어요. 잔교에서 천주교당까지 1km 남짓, 천천히 구경하며 걸어요. 전세 차량은 천주교당 앞에서 다시 만나요.",
+      image: ""
+    },
+    {
       id: "church",
       name: "천주교당",
-      short: "독일 조차지 시절에 지은 쌍탑 성당",
+      short: "독일인 신부가 설계해 1934년에 완공한 쌍탑 성당",
       zh: "天主教堂",
       type: "관광지",
-      desc: "독일 조차지 시절에 지은 성당이에요. 두 개의 탑이 나란히 서 있는 쌍탑 성당이에요.",
+      desc: "독일인 신부가 설계해 1934년에 완공한 성당이에요. 두 개의 탑이 나란히 서 있는 쌍탑 성당이에요. 잔교에서 중산루를 따라 걸어와서, 여기서 다시 차를 타요.",
       image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3c/%E9%9D%92%E5%B2%9B%E5%9C%A3%E5%BC%A5%E5%8E%84%E5%B0%94%E5%A4%A9%E4%B8%BB%E6%95%99%E5%A0%82%E8%A5%BF%E9%9D%A2.jpg/960px-%E9%9D%92%E5%B2%9B%E5%9C%A3%E5%BC%A5%E5%8E%84%E5%B0%94%E5%A4%A9%E4%B8%BB%E6%95%99%E5%A0%82%E8%A5%BF%E9%9D%A2.jpg",
       credit: "사진: 赵乐鑫1989, CC BY-SA 4.0 / 위키미디어 커먼즈"
     },
