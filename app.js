@@ -231,11 +231,11 @@
     );
   }
 
-  // ───────── 지도 (서울·부천·칭다오) ─────────
+  // ───────── 지도 (서울·부천·칭다오·베이징·상하이) ─────────
   function mapCard() {
     return (
       '<section class="card map-card"><p class="eyebrow">칭다오는 여기예요</p>' +
-      '<img class="map-img" src="images/map.svg" width="640" height="440" alt="중국 산둥반도의 칭다오와 한국의 서울, 부천 위치 지도">' +
+      '<img class="map-img" src="images/map.svg" width="640" height="440" alt="중국의 칭다오, 베이징, 상하이와 한국의 서울, 부천 위치 지도">' +
       '<p class="map-note">인천에서 서해 건너 약 600km, 비행기로 1시간 30분 정도예요. 시차는 1시간, 중국이 한 시간 늦어요.</p>' +
       "</section>"
     );
