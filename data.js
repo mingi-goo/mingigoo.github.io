@@ -77,20 +77,20 @@ self.TRIP = {
     {
       date: "2026-10-24",
       label: "2일차",
-      note: "전세 차량으로 이동해요 (18:30까지)",
+      note: "전세 차량으로 이동해요 (09:30~19:30)",
       items: [
-        { time: "07:30", end: "08:15", title: "아침: 숙소에서 중국식 아침 (배달)", place: "breakfast" },
-        { time: "08:30", title: "숙소 앞에서 전세 차량 출발", place: "stay", gather: "숙소 앞" },
-        { time: "09:00", end: "10:20", title: "칭다오맥주 박물관 (한국어 해설 + 원장 시음)", place: "beer" },
-        { time: "10:40", end: "11:05", title: "잔교", place: "zhanqiao" },
-        { time: "11:05", end: "11:40", title: "중산루 옛 거리를 걸어서 천주교당까지", place: "zhongshanlu" },
-        { time: "11:40", end: "11:55", title: "천주교당 (여기서 다시 차를 타요)", place: "church", gather: "천주교당 앞" },
-        { time: "12:05", end: "12:45", title: "소어산 공원", place: "xiaoyushan" },
-        { time: "13:05", end: "14:25", title: "점심: 33호 대원 (산둥요리)", place: "dayuan33" },
-        { time: "14:40", end: "15:30", title: "팔대관 산책", place: "badaguan" },
-        { time: "16:00", end: "17:30", title: "발마사지: 화샤량쯔 하이톈중신점", place: "huaxia" },
-        { time: "18:00", end: "19:15", title: "저녁: 장베이 꼬치집 (전세 차량은 18:30에 끝)", place: "satdinner" },
-        { time: "19:15", end: "20:15", title: "타이동 야시장 구경 후 DiDi 2대로 숙소 복귀", place: "taidong" }
+        { time: "08:30", end: "09:15", title: "아침: 숙소에서 중국식 아침 (배달)", place: "breakfast" },
+        { time: "09:30", title: "숙소 앞에서 전세 차량 출발", place: "stay", gather: "숙소 앞" },
+        { time: "10:00", end: "11:20", title: "칭다오맥주 박물관 (한국어 해설 + 원장 시음)", place: "beer" },
+        { time: "11:40", end: "12:10", title: "잔교", place: "zhanqiao" },
+        { time: "12:10", end: "12:50", title: "중산루 옛 거리를 걸어서 천주교당까지", place: "zhongshanlu" },
+        { time: "12:50", end: "13:10", title: "천주교당 (여기서 다시 차를 타요)", place: "church", gather: "천주교당 앞" },
+        { time: "13:30", end: "14:45", title: "점심: 33호 대원 (산둥요리)", place: "dayuan33" },
+        { time: "15:00", end: "15:40", title: "소어산 공원", place: "xiaoyushan" },
+        { time: "15:50", end: "16:25", title: "팔대관 산책", place: "badaguan" },
+        { time: "16:40", end: "18:00", title: "발마사지: 화샤량쯔 하이톈중신점", place: "huaxia" },
+        { time: "18:30", end: "19:45", title: "저녁: 장베이 꼬치집 (전세 차량은 여기서 끝)", place: "satdinner" },
+        { time: "19:45", end: "20:45", title: "타이동 야시장 구경 후 DiDi 2대로 숙소 복귀", place: "taidong" }
       ]
     },
     {
