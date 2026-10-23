@@ -247,6 +247,31 @@
     );
   }
 
+  // ───────── 지금 화면 알림 (data.js의 nowNotices) ─────────
+  function noticeCards(t) {
+    return (T.nowNotices || []).map(function (n) {
+      var f = n.from.split(/[ T]/), e = n.to.split(/[ T]/);
+      if (t < toMs(f[0], f[1], n.fromTz) || t >= toMs(e[0], e[1], n.toTz)) return "";
+      var p = n.place && placeById[n.place];
+      var html =
+        '<section class="card now-card">' +
+        '<p class="eyebrow accent">알림</p>' +
+        '<h1 class="now-title">' + esc(n.title) + "</h1>" +
+        (n.body ? '<p class="place-desc">' + esc(n.body) + "</p>" : "");
+      if (p && p.menu && p.menu.length) {
+        var label = esc(p.menuTitle || "메뉴");
+        html +=
+          '<div class="fold open">' +
+          '<button type="button" class="fold-btn" data-fold aria-expanded="true">' +
+          '<span class="fold-open">' + label + " 펼치기 (" + p.menu.length + "개) ▾</span>" +
+          '<span class="fold-close">' + label + " 접기 ▴</span></button>" +
+          '<div class="fold-body">' + menuList(p.menu) + "</div></div>" +
+          '<div class="btn-row"><button type="button" class="btn" data-goplace="' + esc(p.id) + '">장소 보기</button></div>';
+      }
+      return html + "</section>";
+    }).join("");
+  }
+
   // ───────── 지금 탭 ─────────
   function renderNow() {
     var t = now();
@@ -260,7 +285,7 @@
       '<p class="now-clock">중국 ' + pad(c.h) + ":" + pad(c.mi) + " · 한국 " + pad(korea) + ":" + pad(c.mi) + "</p>" +
       '</div><p class="trip-badge"><span class="flag" aria-hidden="true"></span>칭다오 여행</p>' +
       "</div>";
-    var html = head + rulesBox(s.mode === "before");
+    var html = head + noticeCards(t) + rulesBox(s.mode === "before");
 
     if (s.mode === "before") {
       var dep = T.departure;
