@@ -52,10 +52,16 @@
   // ───────── 장소 ─────────
   var placeById = {};
   T.places.forEach(function (p) { placeById[p.id] = p; });
+  // unlock: "2026-10-23 16:05" (중국 시간)이 있는 장소는 그 시각부터 보여요.
+  function unlocked(p) {
+    if (!p || !p.unlock) return !!p;
+    var u = p.unlock.split(/[ T]/);
+    return now() >= toMs(u[0], u[1]);
+  }
   function placeIds(item) {
     var p = item.place;
     var ids = Array.isArray(p) ? p : p ? [p] : [];
-    return ids.filter(function (id) { return placeById[id]; });
+    return ids.filter(function (id) { return unlocked(placeById[id]); });
   }
 
   // ───────── 일정 펼치기 ─────────
@@ -380,6 +386,7 @@
   function renderPlaces() {
     var html = '<h1 class="page-title">장소</h1>';
     T.places.forEach(function (p) {
+      if (!unlocked(p)) return;
       var hasZh = !isTbd(p.zh);
       html +=
         '<article class="card place" id="place-' + esc(p.id) + '">' +
@@ -630,7 +637,10 @@
   showTab("now");
 
   // 시간이 흐르면 '지금'과 '일정'을 다시 그립니다.
+  var placesKey = "";
   function refresh() {
+    var k = T.places.filter(unlocked).length + "";
+    if (k !== placesKey) { placesKey = k; renderPlaces(); }
     if (current === "now") renderNow();
     if (current === "schedule") renderSchedule();
   }
